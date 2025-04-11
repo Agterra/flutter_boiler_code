@@ -1,0 +1,27 @@
+targets:
+  $default:
+    builders:
+      mon_app_flutter|entity_mapper_generator:
+        enabled: true
+        generate_for:
+          - lib/**/*.dart
+      mon_app_flutter|local_storage_generator:
+        enabled: true
+        generate_for:
+          - lib/**/*.dart
+
+builders:
+  entity_mapper_generator:
+    import: "package:mon_app_flutter/builder.dart"
+    builder_factories: ["entityMapperGenerator"]
+    build_extensions: { ".dart": ["entity_mapper.g.part"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  local_storage_generator:
+    import: "package:mon_app_flutter/builder.dart"
+    builder_factories: ["localStorageGenerator"]
+    build_extensions: { ".dart": ["local_storage.g.part"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
